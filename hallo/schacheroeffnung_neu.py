@@ -1,4 +1,4 @@
-#Schacheroeffnung in besser
+# Schacheroeffnung in besser
 
 colour_options = {
     '1': "Wollen sie wollen eine Eröffnung für Schwarz finden?",
@@ -28,29 +28,23 @@ bekannte_eroeffnung_one = {
     "2": "Wollen sie eine eher unpopuläre Eröffnung finden?",
 }
 
-
-
-options_in_option_one = [bauer_options_one, bauer_options]
+option_one = [bauer_options_one, bauer_options]
 options_in_option_two = [bekannte_eroeffnung, bekannte_eroeffnung]
 
 
-def choose_number_indexed(options) -> int:
-    print("Bitte auswählen")
+def choose_number(options):
+    print("Bitte auswählen. ")
     while True:
         for k, v in options.items():
-            print(f'[{k}] {v}')
-        user_input = input()
-        for k in options.keys():
-            if k == user_input:
-                return int(user_input) - 1
-        print("Bitte gültige Auswahl treffen")
+            print(f"[{k}] : {v}")
+        a = input()
+        for i in options.keys():
+            if a == i:
+                return int(a) - 1
+        print("Ungültig! ")
 
 
+input1 = choose_number(colour_options)
+next_options = option_one[input1]
 
-input_option_one = choose_number_indexed(colour_options)
-next_options = options_in_option_one[input_option_one]
-
-input_option_two = choose_number_indexed(next_options)
-
-
-
+input_option_two = choose_number(next_options)

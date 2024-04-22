@@ -2,6 +2,8 @@ import time as t
 score = 0
 
 print("Welcome to the math trainer!")
+
+
 def math_exercise (exercise, time_remaining, result, points, minus_points):
     score = 0
     print(f"Exercise: {exercise}. You have {time_remaining} seconds to solve this.")
@@ -37,4 +39,4 @@ print(f"Your total score is {result_score} ")
 score1 = math_exercise("What is 4 ^ 3?", 6, 64, 5, 5)
 result_score = result_score + score1
 print(f"Your total score is {result_score} ")
-print("Bye! If you want to learn real math DONT PLAY THIS GAME! Watch Youtube or something like this.")
+print("Bye! If you want to learn real math DONT PLAY THIS GAME! Watch Youtube orw something like this.")

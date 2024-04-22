@@ -6,6 +6,7 @@ pygame.init()
 
 x = 1000
 y = 1000
+asus = pygame.K_s
 clock = pygame.time.Clock()
 bg = pygame.image.load("backround.png")
 tomatoe = pygame.image.load("tomatoe.png")
@@ -14,6 +15,7 @@ screen = pygame.display.set_mode((x, y))
 cube = pygame.Surface((50, 50))
 
 man = pygame.Surface((20, 20))
+
 
 
 x_pos_man = y / 2
@@ -34,13 +36,13 @@ while True:
     screen.blit(cube, (x_pos_man, y_pos_man))
 
     keys = pygame.key.get_pressed()
-    if moving_up == True:
+    if moving_up:
         y_pos_man -= speed
-    if moving_down == True:
+    if moving_down:
         y_pos_man += speed
-    if moving_left == True:
+    if moving_left:
         x_pos_man -= speed
-    if moving_right == True:
+    if moving_right:
         x_pos_man += speed
     if keys[pygame.K_a]:
         moving_left = True
@@ -57,7 +59,7 @@ while True:
         moving_right = False
         moving_up = True
         moving_down = False
-    if keys[pygame.K_s]:
+    if keys[asus]:
         moving_left = False
         moving_right = False
         moving_up = False
@@ -77,4 +79,4 @@ while True:
 
     pygame.display.update()
     clock.tick(60)
-    screen.fill(("Red"))
+    screen.fill("Red")
