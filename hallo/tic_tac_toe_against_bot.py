@@ -7,7 +7,10 @@ def make_move(x_or_o, position):
 
 
 def print_battle_field():
-    print(f"{battle_field[0:3]}\n{battle_field[3:6]}\n{battle_field[6:9]}")
+    print(f"{battle_field[0]} | {battle_field[1]} | {battle_field[2]}")
+    print(f"{battle_field[3]} | {battle_field[4]} | {battle_field[5]}")
+    print(f"{battle_field[6]} | {battle_field[7]} | {battle_field[8]}")
+    #print(f"{battle_field[0:3]}\n{battle_field[3:6]}\n{battle_field[6:9]}")
 
 
 def make_string_to_int(input_text, extra_condition=None, error_text=""):
@@ -33,20 +36,22 @@ def players_move():
             continue
         make_move("X", move_pos - 1)
         break
-
-
-def win_condition(a, b, c):
-    if battle_field[a] == "X" and battle_field[b] == "X" and battle_field[c] == "X":
-        print("Team X wins")
-        sys.exit()
-    elif battle_field[a] == "O" and battle_field[b] == "O" and battle_field[c] == "O":
-        print("Team O wins")
-        sys.exit()
+    check_for_win()
 
 
 def check_for_win():
-    win_condition(0, 1, 2)
-    win_condition(0, 1, 2)
+    for i in range(len(win_sets)):
+        if battle_field[win_sets[i][0]] == "X" and battle_field[win_sets[i][1]] == "X" and battle_field[
+            win_sets[i][2]] == "X":
+            print("Team X wins")
+            print_battle_field()
+            sys.exit()
+        elif battle_field[win_sets[i][0]] == "O" and battle_field[win_sets[i][1]] == "O" and battle_field[
+            win_sets[i][2]] == "O":
+            print("Team O wins")
+            print_battle_field()
+
+            sys.exit()
 
 
 def bot_move():
@@ -56,9 +61,54 @@ def bot_move():
             continue
         make_move("O", random_field)
         break
+    check_for_win()
+
+
+def print_win(color):
+    print(f"Team {color} wins")
+    print_battle_field()
+    sys.exit()
+
+
+def bot_make_winning_move(color):
+    for i in range(len(win_sets)):
+        if battle_field[win_sets[i][0]] == color and battle_field[win_sets[i][1]] == color and battle_field[
+            win_sets[i][2]] == " ":
+            battle_field[win_sets[i][2]] = "O"
+            if color == "O":
+                print_win("O")
+            else:
+                return True
+        elif battle_field[win_sets[i][0]] == color and battle_field[win_sets[i][2]] == color and battle_field[
+            win_sets[i][1]] == " ":
+            battle_field[win_sets[i][1]] = "O"
+            if color == "O":
+                print_win("O")
+            else:
+                return True
+        elif battle_field[win_sets[i][1]] == color and battle_field[win_sets[i][2]] == color and battle_field[
+            win_sets[i][0]] == " ":
+            battle_field[win_sets[i][0]] = "O"
+            if color == "O":
+                print_win("O")
+            else:
+                return True
+
+
+def bot():
+    bot_make_winning_move("O")
+    a = bot_make_winning_move("X")
+    if a == True:
+        return None
+    elif battle_field[4] == " ":
+        battle_field[4] = "O"
+    else:
+        bot_move()
 
 
 battle_field = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+win_sets = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+
 for i in range(9):
     players_move()
-    bot_move()
+    bot()
