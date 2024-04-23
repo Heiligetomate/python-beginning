@@ -10,7 +10,7 @@ def print_battle_field():
     print(f"{battle_field[0]} | {battle_field[1]} | {battle_field[2]}")
     print(f"{battle_field[3]} | {battle_field[4]} | {battle_field[5]}")
     print(f"{battle_field[6]} | {battle_field[7]} | {battle_field[8]}")
-    #print(f"{battle_field[0:3]}\n{battle_field[3:6]}\n{battle_field[6:9]}")
+    # print(f"{battle_field[0:3]}\n{battle_field[3:6]}\n{battle_field[6:9]}")
 
 
 def make_string_to_int(input_text, extra_condition=None, error_text=""):
@@ -72,22 +72,25 @@ def print_win(color):
 
 def bot_make_winning_move(color):
     for i in range(len(win_sets)):
-        if battle_field[win_sets[i][0]] == color and battle_field[win_sets[i][1]] == color and battle_field[
-            win_sets[i][2]] == " ":
+        if (battle_field[win_sets[i][0]] == color
+                and battle_field[win_sets[i][1]] == color
+                and battle_field[win_sets[i][2]] == " "):
             battle_field[win_sets[i][2]] = "O"
             if color == "O":
                 print_win("O")
             else:
                 return True
-        elif battle_field[win_sets[i][0]] == color and battle_field[win_sets[i][2]] == color and battle_field[
-            win_sets[i][1]] == " ":
+        elif (battle_field[win_sets[i][0]] == color
+              and battle_field[win_sets[i][2]] == color
+              and battle_field[win_sets[i][1]] == " "):
             battle_field[win_sets[i][1]] = "O"
             if color == "O":
                 print_win("O")
             else:
                 return True
-        elif battle_field[win_sets[i][1]] == color and battle_field[win_sets[i][2]] == color and battle_field[
-            win_sets[i][0]] == " ":
+        elif (battle_field[win_sets[i][1]] == color
+              and battle_field[win_sets[i][2]] == color
+              and battle_field[win_sets[i][0]] == " "):
             battle_field[win_sets[i][0]] = "O"
             if color == "O":
                 print_win("O")
@@ -97,8 +100,8 @@ def bot_make_winning_move(color):
 
 def bot():
     bot_make_winning_move("O")
-    a = bot_make_winning_move("X")
-    if a == True:
+    bot_cant_win = bot_make_winning_move("X")
+    if bot_cant_win:
         return None
     elif battle_field[4] == " ":
         battle_field[4] = "O"
