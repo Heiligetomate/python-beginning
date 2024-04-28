@@ -1,11 +1,15 @@
 class Character:
-    def __init__(self, name, health, power):
+    def __init__(self, name: str, health: int, power: int, chance_to_hit: int, ranged: bool, weapon: str):
         self.name = name
         self.health = health
         self.power = power
+        self.ranged = ranged
+        self.chance_to_hit = chance_to_hit
         self.__is_alive = self.__check_for_alive()
 
     def take_damage(self, damage):
+        if not self.ranged:
+            self.health -= int(damage/2.5)
         self.health -= damage
         self.__is_alive = self.__check_for_alive()
         return self.health
