@@ -22,13 +22,13 @@ def main_game(character1, character2, health):
     print(f"{character1.name}'s move")
     draw_health_bar(health, health - character1.health)
     print(f"{character1.health}/{health}")
-    user_input = input(f"[1]: {character2.name} angreifen\n[2]: warten und dafür heilen")
+    user_input = input(f"[1]: {character2.name} angreifen\n[2]: warten und dafür heilen ")
     os.system("cls")
     if user_input == "1":
         random_number = r.randint(0, 99)
         if 0 <= random_number <= character1.chance_to_hit:
             character2.take_damage(character1.power)
-            print(f"You dealt {character1.power} damage to {character2}\n")
+            print(f"You dealt {character1.power} damage to {character2.name}\n")
         else:
             print(f"That didnt work")
     elif user_input == "2":
@@ -72,8 +72,9 @@ zwerg = Character("Zwerg", 20, 3, 70, False, "axe")
 archer = Character("Archer", 15, 4, 75, True, "bow and arrow")
 sword_man = Character("Sword man", 10, 6, 40, False, "sword")
 crossbow = Character("Crossbow", 25, 3, 50, True, "crossbow and arrow")
+oger = Character("Oger", 40, 10, 10, False, "club")
 # put all instances in a list
-character_list = [zwerg, archer, sword_man, crossbow]
+character_list = [zwerg, archer, sword_man, crossbow, oger]
 # let player make choice
 for i in character_list:
     print(f"[{character_list.index(i) + 1}]: {i.name}: (health: {i.health}, power: {i.power})")
