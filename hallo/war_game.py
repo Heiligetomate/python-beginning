@@ -3,6 +3,7 @@ from war_game_character import *
 import os
 import termcolor as tc
 import random as r
+import sys
 
 os.system("color")
 
@@ -40,6 +41,7 @@ def main_game(character1, character2, health):
     else:
         print("Invalid input")
 
+
 def characters_move(character, enemy):
     character.take_damage(enemy.power)
     if not character.is_alive:
@@ -67,33 +69,82 @@ def let_player_make_choice(player_number):
         return player_one_choice
 
 
+def upgrade_menu(player):
+    upgrade_choice = input("[1]: upgrade health\n[2]: upgrade power ")
+    if upgrade_choice == "1":
+        player.upgrade_health(3, 50)
+    elif upgrade_choice == "2":
+        player.upgrade_damage(2, 50)
+
+
+def one_full_round():
+    while True:
+        reward = 45
+        main_game(player_one, player_two, player_one_health + juri.extra_health)
+        if player_two.health <= 0:
+            print(f"{matti.name} is dead now")
+            print(f"{juri.name} win's")
+            juri.money += reward
+            print(f"{juri.name} gets {reward} gold.")
+            break
+        main_game(player_two, player_one, player_two_health + juri.extra_health)
+        if player_one.health <= 0:
+            print(f"{juri.name} is dead now")
+            print(f"{matti.name} win's")
+            print(f"{matti.name} gets {reward} gold.")
+            matti.money += reward
+            break
+
+
 # create instances
-zwerg = Character("Zwerg", 20, 3, 70, False, "axe")
-archer = Character("Archer", 15, 4, 75, True, "bow and arrow")
-sword_man = Character("Sword man", 10, 6, 40, False, "sword")
-crossbow = Character("Crossbow", 25, 3, 50, True, "crossbow and arrow")
-oger = Character("Oger", 40, 10, 10, False, "club")
+
+juri = Player("Juri", 0)
+matti = Player("Matti", 0)
 # put all instances in a list
-character_list = [zwerg, archer, sword_man, crossbow, oger]
-# let player make choice
-for i in character_list:
-    print(f"[{character_list.index(i) + 1}]: {i.name}: (health: {i.health}, power: {i.power})")
-player_one = character_list[let_player_make_choice("one") - 1]
-player_two = character_list[let_player_make_choice("two") - 1]
 
-player_one_health = player_one.health
-player_two_health = player_two.health
 
-# game loop
 while True:
-    main_game(player_one, player_two, player_one_health)
-    if player_one.health <= 0:
-        print(f"{player_one.name} is dead now")
-        print(f"{player_two.name} win's")
-        break
+    zwerg = Character("Zwerg", 20, 3, 70, False, "axe")
+    archer = Character("Archer", 15, 4, 75, True, "bow and arrow")
+    sword_man = Character("Sword man", 10, 6, 40, False, "sword")
+    crossbow = Character("Crossbow", 25, 3, 50, True, "crossbow and arrow")
+    oger = Character("Oger", 40, 10, 15, False, "club")
+    character_list = [zwerg, archer, sword_man, crossbow, oger]
 
-    main_game(player_two, player_one, player_two_health)
-    if player_two.health <= 0:
-        print(f"{player_two.name} is dead now")
-        print(f"{player_one.name} win's")
+    while True:
+        play_question = input("Play?\n[1]: leave\n[2]: upgrade\nzum spielen einen anderen Button drücken ")
+        if play_question == "2":
+            who_wants_to_upgrade = input(f"Who wants to upgrade?\n[1]: {juri.name}\n[2]: {matti.name}\n[3]: go back\n")
+            if who_wants_to_upgrade == "1":
+                upgrade_menu(juri)
+            elif who_wants_to_upgrade == "2":
+                upgrade_menu(matti)
+            else:
+                print("Invalid input! ")
+        elif play_question == "1":
+            print(f"{juri.name}: {juri.money}$\n{matti.name}: {matti.money}$")
+            sys.exit()
+        else:
+            break
+    # let player make choice
+    for i in character_list:
+        print(f"[{character_list.index(i) + 1}]: {i.name}: (health: {i.health}, power: {i.power})")
+    player_one_index_choice = let_player_make_choice("one") - 1
+    player_one = character_list[player_one_index_choice]
+    player_one.extra_strength = juri.extra_strength
+    player_one.extra_health = juri.extra_health
+    while True:
+
+        player_two_index_choice = let_player_make_choice("two") - 1
+        if player_two_index_choice == player_one_index_choice:
+            print("Dieser Character ist schon vergeben. ")
+            continue
         break
+    player_two = character_list[player_two_index_choice]
+    player_two.extra_strength = matti.extra_strength
+    player_two.extra_health = matti.extra_health
+    player_one_health = player_one.health
+    player_two_health = player_two.health
+
+    # game loop
+    one_full_round()
