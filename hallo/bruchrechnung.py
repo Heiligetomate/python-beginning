@@ -56,4 +56,3 @@ def print_bruch(one):
     print(one[1])
 
 
-print_bruch([1, 4])
