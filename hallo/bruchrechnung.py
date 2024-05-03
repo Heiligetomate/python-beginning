@@ -1,4 +1,5 @@
 from math import gcd
+import os
 
 
 def convert_input_to_int(input_text):
@@ -50,9 +51,47 @@ def bruch_kuerzen(one):
     return one
 
 
-def print_bruch(one):
-    print(one[0])
+def convert_bruch(one):
+    return f"{one[0]}\n_\n{one[1]}"
+
+
+def ask_for_bruch():
+    one = convert_input_to_int("Bitte geben Sie eine Zahl ein: \n")
     print("_")
-    print(one[1])
+    two = convert_input_to_int("")
+    os.system("cls")
+    return one, two
 
 
+operators = {
+    1: "+",
+    2: "-",
+    3: "*",
+    4: "/"
+}
+
+
+# Main
+print("Willkommen zum Bruch-Rechner.")
+while True:
+    user_makes_choice = input("Welchen Operator?\n[1]: +\n[2]: -\n[3]: *\n[4]: /\n[5]: kuerzen\n[6]: exit\n")
+    if user_makes_choice == "5":
+        bruch_one = ask_for_bruch()
+    else:
+        bruch_one = ask_for_bruch()
+        bruch_two = ask_for_bruch()
+    if user_makes_choice == "1":
+        result = plus_bruch(bruch_one, bruch_two)
+    elif user_makes_choice == "2":
+        result = minus_bruch(bruch_one, bruch_two)
+    elif user_makes_choice == "3":
+        result = multiply_bruch(bruch_one, bruch_two)
+    elif user_makes_choice == "4":
+        result = divide_bruch(bruch_one, bruch_two)
+    elif user_makes_choice == "5":
+        result = bruch_kuerzen(bruch_one)
+    elif user_makes_choice == "6":
+        break
+    else:
+        print("Du hast was falsches eingegeben! ")
+    print(f"Das Ergebnis lautet: \n{convert_bruch(result)}")
