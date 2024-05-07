@@ -9,11 +9,12 @@ You have these weapons:
 [5]: regenerate
 """
 dodge_sets = [("1", "2"),
+              ("a", "2", "2"),
               ("3", "5", "2", "2"),
               ("M", "i", "a", "u"),
               ("1", "L", "w", "/"),
               ("/", "o", "1", "@", "w"),
-              ("@", "1", "3", "*", "²")
+              ("@", "1", "3", "*", "§")
               ]
 time_set = (4, 5, 4, 5, 4, 6)
 
@@ -59,6 +60,8 @@ while boss.life > 0:
         mana += 2
         arrows += 2
         player.life += 1
+        if player.life > player.permanent_life:
+            player.life = player.permanent_life
 
     if boss.life < 0:
         boss.life = 0
