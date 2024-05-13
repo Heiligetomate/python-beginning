@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication,QWidget
+from PySide6.QtWidgets import QApplication, QWidget
 from py6_helper import RocWidget
 
 import sys
@@ -10,3 +10,4 @@ window.show()
 app.exec()
 print(window.a)
 print(window.b)
+
