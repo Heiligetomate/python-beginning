@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QApplication, QWidget
 from py6_helper import RocWidget
 from py6_button_class import Text_Box_With_Enter
+from py6_test import Make_laberrababer
 import sys
 
 
@@ -14,7 +15,7 @@ ask_for_height = Text_Box_With_Enter("Please Type in Screen Height")
 ask_for_height.show()
 ask_for_height.exec()
 
-window = RocWidget(ask_for_width.text, ask_for_height.text)
+window = Make_laberrababer(ask_for_width.text, ask_for_height.text)
 window.show()
 
 app.exec()
