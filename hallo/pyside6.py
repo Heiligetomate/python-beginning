@@ -17,8 +17,7 @@ ask_for_height.exec()
 
 window = Make_laberrababer(ask_for_width.text, ask_for_height.text)
 window.show()
+window.exec()
 
-app.exec()
-print(RocWidget.text)
 
 
