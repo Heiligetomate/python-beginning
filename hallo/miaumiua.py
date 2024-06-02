@@ -1,9 +1,10 @@
 import random as r
 import os
+from maumau_player_class import Player
 
 
 def give_player_cards(number_cards, list_cards):
-    cards_get = r.choices(list_cards, k=number_cards)
+    cards_get = r.sample(list_cards, k=number_cards)
     for i in cards_get:
         list_cards.remove(i)
     return cards_get
@@ -14,7 +15,8 @@ def play_card(hand_cards, stack_card, cards):
         while True:
             chosen_card = input("What card would you like to play? ")
             if chosen_card.lower() == "z":
-                hand_cards.append(give_player_cards(1, cards)[0])
+                player_cards = give_player_cards(1, cards)
+                hand_cards.append(player_cards[0])
                 return hand_cards, stack_card
             try:
                 chosen_card = int(chosen_card)
@@ -34,27 +36,30 @@ def play_card(hand_cards, stack_card, cards):
     return hand_cards, stack_card
 
 
+def make_move(player, start_card, cards):
+    print(f"stack: {start_card}")
+    print(f"your cards {player.name}: {player.cards} (z for new card)")
+    player_one, start_card = play_card(player.cards, start_card, cards)
+    os.system("cls")
+    return start_card
+
+
 def run():
     cards = ['7♦', '8♦', '9♦', 'T♦', 'J♦', 'Q♦', 'K♦', 'A♦',
              '7♠', '8♠', '9♠', 'T♠', 'J♠', 'Q♠', 'K♠', 'A♠',
              '7♥', '8♥', '9♥', 'T♥', 'J♥', 'Q♥', 'K♥', 'A♥',
              '7♣', '8♣', '9♣', 'T♣', 'J♣', 'Q♣', 'K♣', 'A♣']
+    card_deck = list(cards)
 
-    start_card = r.choice(cards)
-    cards.remove(start_card)
-    player_one = give_player_cards(5, cards)
-    player_two = give_player_cards(5, cards)
+    start_card = give_player_cards(1, card_deck)[0]
+    player_one = Player(give_player_cards(5, card_deck), input("Wie heißt du? "))
+    player_two = Player(give_player_cards(5, card_deck), input("Wie heißt du? "))
 
     while True:
-        # one
-        print(f"stack: {start_card}")
-        print(f"your cards player one: {player_one} (Z for new card)")
-        player_one, start_card = play_card(player_one, start_card, cards)
-        os.system("cls")
-        # two
-        print(f"stack: {start_card}")
-        print(f"your cards player two: {player_two} (Z for new card)")
-        player_two, start_card = play_card(player_two, start_card, cards)
-        os.system("cls")
-
-
+        if len(card_deck) < 2:
+            print("card refill!")
+            card_deck = list(cards)
+        start_card = make_move(player_one, start_card, card_deck)
+        if player_one.check_for_win(): break
+        start_card = make_move(player_two, start_card, card_deck)
+        if player_two.check_for_win(): break
