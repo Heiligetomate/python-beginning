@@ -19,4 +19,3 @@ print(d.b)
 print(d.money)
 print(money)
 
-# KLAASSEN SIND DRECK

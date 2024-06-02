@@ -5,6 +5,7 @@ import numpy as np
 
 matplotlib.use('TkAgg')
 
+
 def print_image_info(image):
     height, width, channels = image.shape
     print("Height:", height)
@@ -36,5 +37,9 @@ def change_pixels(y_pos, x_pos, size, color, source_image):
 image = load_image_as_np_array("data/hertz.jpg")
 print_image_info(image)
 show_image(image)
-image = change_pixels(400, 800, 400, [255, 0, 0], image)
+color = []
+for i in range(3):
+    color.append(input("What color would you like to have? "))
+size = input("What size would you like to have? ")
+image = change_pixels(400, 800, int(size), color, image)
 show_image(image)
