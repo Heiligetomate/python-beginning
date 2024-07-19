@@ -13,11 +13,6 @@ round_count = 0
 board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
 win_sets = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
-for i in range(1, 3):
-    pygame.draw.line(screen, line_color, (field_dimension * i, 0), (field_dimension * i, screen_size))
-for i in range(1, 3):
-    pygame.draw.line(screen, line_color, (0, field_dimension * i), (screen_size, field_dimension * i))
-
 
 def draw_x(center):
     pygame.draw.line(screen, line_color, (center[0] - screen_size / 6, center[1] - offset), (center[0] + offset, center[1] + offset))
@@ -26,6 +21,22 @@ def draw_x(center):
 
 def draw_o(center):
     pygame.draw.circle(screen, line_color, center, field_dimension / 2, width=1)
+
+
+def draw_lines():
+    for i in range(1, 3):
+        pygame.draw.line(screen, line_color, (field_dimension * i, 0), (field_dimension * i, screen_size))
+    for i in range(1, 3):
+        pygame.draw.line(screen, line_color, (0, field_dimension * i), (screen_size, field_dimension * i))
+
+
+def reset_board():
+    global board
+    global round_count
+    round_count = 0
+    board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+    screen.fill((0, 0, 0))
+    draw_lines()
 
 
 def check_for_win():
@@ -38,6 +49,8 @@ def check_for_win():
             sys.exit()
 
 
+# screen.fill((255, 0, 100))
+draw_lines()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -63,7 +76,6 @@ while True:
 
     check_for_win()
     if round_count == 9:
-        print("Draw! ")
-        sys.exit()
+        reset_board()
     pygame.display.update()
     clock.tick(100)
