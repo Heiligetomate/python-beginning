@@ -44,6 +44,26 @@ def make_move(player, start_card, cards):
     return start_card
 
 
+def check_for_special_card(enemy_player, start_card, card_deck):
+    if start_card[0] == "8":
+        print(f"{enemy_player.name} you have to suspend! ")
+        return False
+    elif start_card[0] == "7":
+        print(f"{enemy_player.name} you get two extra cards :)")
+        extra_cards = give_player_cards(2, card_deck)
+        for i in extra_cards:
+            enemy_player.cards.append(i)
+    elif start_card[0] == "J":
+        print("You can choose the stack card! ")
+        while True:
+            chosen_card = input("Which do you choose?\n")
+            if chosen_card in card_deck:
+                print(f"New Stack card: {chosen_card}")
+                return chosen_card
+            print("Not in the Carddeck or invalid.")
+    return True
+
+
 def run():
     cards = ['7♦', '8♦', '9♦', 'T♦', 'J♦', 'Q♦', 'K♦', 'A♦',
              '7♠', '8♠', '9♠', 'T♠', 'J♠', 'Q♠', 'K♠', 'A♠',
@@ -53,13 +73,37 @@ def run():
 
     start_card = give_player_cards(1, card_deck)[0]
     player_one = Player(give_player_cards(5, card_deck), input("Wie heißt du? "))
-    player_two = Player(give_player_cards(5, card_deck), input("Wie heißt du? "))
+    while True:
+        player_two_name = input("Wie heißt du? ")
+        if player_two_name.lower() == player_one.name.lower():
+            print("Already used name! ")
+            continue
+        break
+    player_two = Player(give_player_cards(5, card_deck), player_two_name)
 
     while True:
         if len(card_deck) < 2:
             print("card refill!")
             card_deck = list(cards)
+
+        # Player One
         start_card = make_move(player_one, start_card, card_deck)
+        special_card = check_for_special_card(player_two, start_card, card_deck)
+        if special_card:
+            pass
+        elif not special_card:
+            continue
+        else:
+            start_card = special_card
         if player_one.check_for_win(): break
+
+        # Player Two
         start_card = make_move(player_two, start_card, card_deck)
+        special_card = check_for_special_card(player_one, start_card, card_deck)
+        if special_card:
+            pass
+        elif not special_card:
+            continue
+        else:
+            start_card = special_card
         if player_two.check_for_win(): break

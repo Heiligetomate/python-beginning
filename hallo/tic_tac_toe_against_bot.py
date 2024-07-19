@@ -50,7 +50,6 @@ def check_for_win():
             win_sets[i][2]] == "O":
             print("Team O wins")
             print_battle_field()
-
             sys.exit()
 
 
@@ -78,7 +77,7 @@ def bot_make_winning_move(color):
             battle_field[win_sets[i][2]] = "O"
             if color == "O":
                 print_win("O")
-            else:
+            else:   
                 return True
         elif (battle_field[win_sets[i][0]] == color
               and battle_field[win_sets[i][2]] == color
